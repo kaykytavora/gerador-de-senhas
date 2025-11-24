@@ -1,31 +1,39 @@
 import { useState } from "react";
 
 function App() {
-
-  const [password, setPassword] = useState("")
-  const [copyText, setcopyText] = useState("Copiar")
+  const [password, setPassword] = useState("");
+  const [copyText, setcopyText] = useState("Copiar");
+  const [passwordSize, setpasswordSize] = useState(12)
 
   function generate() {
-    const characters = "'1234567890-=!@#$%¨&*()_+qwertyuiop[asdfghjklç~]zxcvbnm,.;/QWERTYUIOP{ASDFGHJKLÇ^}ZXCVBNM<>:?"
-    const length = 12
-    let newPassword = ""
-    for (let i = 0; i < length; i++) {
-      const position = Math.floor(Math.random() * characters.length)
-      newPassword += characters[position]
+    const characters =
+      "'1234567890-=!@#$%¨&*()_+qwertyuiop[asdfghjklç~]zxcvbnm,.;/QWERTYUIOP{ASDFGHJKLÇ^}ZXCVBNM<>:?";
+    let newPassword = "";
+    for (let i = 0; i < passwordSize; i++) {
+      const position = Math.floor(Math.random() * characters.length);
+      newPassword += characters[position];
     }
-    setPassword(newPassword)
-    setcopyText("Copiar")
+    setPassword(newPassword);
+    setcopyText("Copiar");
   }
 
-  function copyToClipboard(){
-    window.navigator.clipboard.writeText(password)
-    setcopyText('Copiado ')
+  function copyToClipboard() {
+    window.navigator.clipboard.writeText(password);
+    setcopyText("Copiado ");
   }
 
   return (
     <div className="app">
       <h1>Gerador de senhas</h1>
-
+      <div>
+        <label htmlFor="passwordSize">Tamanho</label>
+        <input type="number" 
+        id="passwordSize" 
+        min={1} 
+        value={passwordSize}
+        onChange={(ev)=> setpasswordSize(ev.target.value)}
+        />
+      </div>
       <button onClick={generate}> Gerar!</button>
       <button onClick={copyToClipboard}>{copyText}</button>
 
